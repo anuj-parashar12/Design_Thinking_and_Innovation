@@ -40,29 +40,21 @@ KalaSetu is a functional, responsive web application connecting patrons directly
 - **Review Integrity & Security**: Blocks duplicate reviews (one review per completed order) and prevents unauthorized reviews from users without completed purchases.
 - **Dynamic Rating Breakdown**: Calculates real-time average star ratings and review counts across product cards, artwork details, artisan profiles, and the artisan directory.
 
-### 6. Dynamic Impact Tracker (`/impact`)
-- **100% Calculated from Live Application Data** (zero hardcoded numbers):
-  - **Total Order Value Preserved**: Sum of all completed order amounts transferred directly to artisans.
-  - **Unique Artisans Supported**: Count of unique master craftspeople who have received completed commissions.
-  - **Total Craftsmanship Hours Preserved**: Sum of intricate handcrafting hours (`craftsmanship_hours`) across completed creations.
-  - **Craft Traditions Represented**: Distinct count of heritage art forms sustained.
-- **Interactive Features**: State-by-state impact breakdown, recent verified completions feed, and an interactive artisan livelihood simulator.
-
-### 7. Wishlist & Curated Gift Collections
+### 6. Wishlist & Curated Gift Collections
 - **Quick Heart Toggle**: Heart button on product cards and artwork pages to save items instantly to your default wishlist or curate into specific collections.
 - **Personalized Gift Collections**: Create, rename, and delete custom collections (e.g., *"Wedding Gifts"*, *"Diwali Decorations"*, *"Living Room Heritage"*).
 - **Public & Private Collections**: Toggle collection visibility. Public collections generate a shareable token link (`/collection/:shareId`) so friends and family can browse curated items.
 
-### 8. Direct Buyer-to-Artisan Communication
+### 7. Direct Buyer-to-Artisan Communication
 - Zero-commission direct fair trade.
 - **WhatsApp Seller**: Click-to-chat (`https://wa.me/...`) with prefilled product title, inquiry message, and product link.
 - **Call Seller**: Telephone link (`tel:+91...`) with privacy opt-in toggles.
 
-### 9. Digital Craft Passport
+### 8. Digital Craft Passport
 - Automatically stamps visited state heritage pages in browser storage (`localStorage`).
 - Visual stamp collection with cultural emblems and progress tracking.
 
-### 10. Dual-Engine Architecture (Zero-Setup Demo Mode + Supabase)
+### 9. Dual-Engine Architecture (Zero-Setup Demo Mode + Supabase)
 - **Local Demo Mode**: Works right out of the box without requiring external credentials or internet accounts! Uses `localStorage` for session/product/order/review metadata and `IndexedDB` for high-resolution images, progress photos, videos, and documents.
 - **Supabase Cloud Mode**: Seamlessly switches to PostgreSQL and Supabase Storage when credentials are added to `.env`.
 
