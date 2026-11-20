@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Users, MapPin, Sparkles, ArrowRight, MessageCircle, Phone } from 'lucide-react';
 
 export default function ArtisansDirectory() {
-  const { products } = useAuth();
+  const { products, getArtisanRating } = useAuth();
 
   // Extract unique sellers from products
   const artisansMap = new Map();
@@ -66,6 +66,14 @@ export default function ArtisansDirectory() {
                   <span className="block text-[11px] font-semibold text-terracotta-600 line-clamp-1">
                     {artisan.craft_specialization || 'Heritage Craftsperson'}
                   </span>
+                  {(() => {
+                    const r = getArtisanRating(artisan.id);
+                    return r && r.totalReviews > 0 ? (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 mt-1">
+                        ★ {r.averageRating} ({r.totalReviews} reviews)
+                      </span>
+                    ) : null;
+                  })()}
                 </div>
               </div>
 

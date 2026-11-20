@@ -1,17 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Sparkles, Video, FileText, ArrowRight } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import WishlistButton from './WishlistButton';
+import { MapPin, Sparkles, Star, ArrowRight } from 'lucide-react';
 
 export default function ProductCard({ product }) {
+  const { getArtisanRating } = useAuth();
+
   const hasStory = product.story_text || product.story_video_url || product.story_document_url;
   const primaryImage = (product.image_urls && product.image_urls.length > 0) 
     ? product.image_urls[0] 
     : 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80';
 
   const sellerName = product.seller?.name || 'Local Master Artisan';
+  const ratingInfo = product.seller_id ? getArtisanRating(product.seller_id) : null;
 
   return (
-    <div className="group bg-white rounded-2xl border border-cream-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+    <div className="group bg-white rounded-2xl border border-cream-200 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between relative">
       <div>
         {/* Image Container with Badges */}
         <div className="relative aspect-4/3 overflow-hidden bg-cream-100">
@@ -26,17 +31,22 @@ export default function ProductCard({ product }) {
           />
 
           {/* State Tag */}
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-earth-900/80 text-white backdrop-blur-md shadow-xs">
               <MapPin className="w-3 h-3 text-terracotta-400" />
               {product.state}
             </span>
           </div>
 
+          {/* Wishlist Heart Button (Top Right) */}
+          <div className="absolute top-3 right-3 z-10">
+            <WishlistButton productId={product.id} iconSize="w-4 h-4" />
+          </div>
+
           {/* Behind the Art Badge */}
           {hasStory && (
-            <div className="absolute top-3 right-3">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-terracotta-500/90 text-white backdrop-blur-md shadow-sm">
+            <div className="absolute bottom-2 right-3 z-10">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-terracotta-500/90 text-white backdrop-blur-md shadow-sm">
                 <Sparkles className="w-3 h-3 text-amber-200" />
                 Story Inside
               </span>
@@ -44,7 +54,7 @@ export default function ProductCard({ product }) {
           )}
 
           {/* Category Tag (bottom overlay) */}
-          <div className="absolute bottom-2 left-3">
+          <div className="absolute bottom-2 left-3 z-10">
             <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-white/90 text-earth-900 backdrop-blur-xs shadow-xs">
               {product.category}
             </span>
@@ -53,13 +63,23 @@ export default function ProductCard({ product }) {
 
         {/* Details Section */}
         <div className="p-5">
-          <h3 className="font-display font-bold text-lg text-earth-900 group-hover:text-terracotta-600 transition-colors line-clamp-1 mb-1.5">
-            {product.name}
-          </h3>
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <h3 className="font-display font-bold text-lg text-earth-900 group-hover:text-terracotta-600 transition-colors line-clamp-1">
+              {product.name}
+            </h3>
+          </div>
 
-          <p className="text-xs text-earth-800/70 mb-3">
-            By <span className="font-medium text-earth-900">{sellerName}</span>
-          </p>
+          <div className="flex items-center justify-between text-xs mb-3">
+            <p className="text-earth-800/70 truncate pr-2">
+              By <span className="font-medium text-earth-900">{sellerName}</span>
+            </p>
+            {ratingInfo && ratingInfo.totalReviews > 0 && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md shrink-0 border border-amber-200">
+                <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                {ratingInfo.averageRating} ({ratingInfo.totalReviews})
+              </span>
+            )}
+          </div>
 
           <p className="text-sm text-earth-800/80 line-clamp-2 leading-relaxed mb-4">
             {product.description || 'Authentic handmade artwork crafted using generational traditional techniques.'}

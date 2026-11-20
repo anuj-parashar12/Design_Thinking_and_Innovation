@@ -17,6 +17,10 @@ import Register from './pages/Register';
 import SellerDashboard from './pages/SellerDashboard';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
+import MyOrders from './pages/MyOrders';
+// import OurImpact from './pages/OurImpact';
+import Collections from './pages/Collections';
+import PublicCollection from './pages/PublicCollection';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -41,6 +45,12 @@ export default function App() {
           <Route path="/artisans" element={<ArtisansDirectory />} />
           <Route path="/artisan/:sellerId" element={<ArtisanProfile />} />
           <Route path="/passport" element={<CraftPassport />} />
+          {/* <Route path="/impact" element={<OurImpact />} /> */}
+          <Route path="/orders" element={<MyOrders />} />
+          <Route path="/my-orders" element={<MyOrders />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/wishlist" element={<Collections />} />
+          <Route path="/collection/:shareId" element={<PublicCollection />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<SellerDashboard />} />

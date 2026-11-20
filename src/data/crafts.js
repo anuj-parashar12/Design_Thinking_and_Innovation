@@ -117,6 +117,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     story_video_url: '',
     story_document_url: '',
     available: true,
+    craftsmanship_hours: 52,
     created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
     seller: {
       id: 'artisan-sita-devi',
@@ -150,6 +151,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     story_video_url: '',
     story_document_url: '',
     available: true,
+    craftsmanship_hours: 90,
     created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
     seller: {
       id: 'artisan-rabindra-barik',
@@ -183,6 +185,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     story_video_url: '',
     story_document_url: '',
     available: true,
+    craftsmanship_hours: 34,
     created_at: new Date(Date.now() - 86400000 * 4).toISOString(),
     seller: {
       id: 'artisan-kripal-sharma',
@@ -215,6 +218,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     story_video_url: '',
     story_document_url: '',
     available: true,
+    craftsmanship_hours: 76,
     created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
     seller: {
       id: 'artisan-noor-jahan',
@@ -247,6 +251,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     story_video_url: '',
     story_document_url: '',
     available: true,
+    craftsmanship_hours: 320,
     created_at: new Date(Date.now() - 86400000 * 6).toISOString(),
     seller: {
       id: 'artisan-salvi-bhai',

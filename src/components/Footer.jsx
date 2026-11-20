@@ -88,6 +88,21 @@ export default function Footer() {
                   Meet the Artisans
                 </Link>
               </li>
+              {/* <li>
+                <Link to="/impact" className="hover:text-terracotta-400 transition-colors font-medium text-emerald-400">
+                  Our Impact Tracker
+                </Link>
+              </li> */}
+              <li>
+                <Link to="/orders" className="hover:text-terracotta-400 transition-colors">
+                  Custom Orders & Tracking
+                </Link>
+              </li>
+              <li>
+                <Link to="/collections" className="hover:text-terracotta-400 transition-colors">
+                  Wishlist & Gift Collections
+                </Link>
+              </li>
               <li>
                 <Link to="/passport" className="hover:text-terracotta-400 transition-colors">
                   Digital Craft Passport

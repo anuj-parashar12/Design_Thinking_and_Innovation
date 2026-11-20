@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import StorySection from '../components/StorySection';
 import ContactSeller from '../components/ContactSeller';
+import CustomOrderModal from '../components/CustomOrderModal';
+import ReviewsList from '../components/ReviewsList';
+import WishlistButton from '../components/WishlistButton';
 import { 
   MapPin, 
   Tag, 
@@ -11,18 +14,21 @@ import {
   ArrowLeft, 
   User, 
   CheckCircle2, 
-  Sparkles,
-  Edit,
-  Share2
+  Sparkles, 
+  Edit, 
+  Share2,
+  Star,
+  Clock
 } from 'lucide-react';
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const { products, user } = useAuth();
+  const { products, user, getArtisanReviews, getArtisanRating } = useAuth();
   const navigate = useNavigate();
 
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [customModalOpen, setCustomModalOpen] = useState(false);
 
   // Find product from memory/database
   const product = products.find((p) => p.id === id);
@@ -54,6 +60,10 @@ export default function ProductDetails() {
   const isOwner = user && user.id === product.seller_id;
   const seller = product.seller || {};
 
+  // Fetch reviews & rating for this artisan
+  const artisanReviews = product.seller_id ? getArtisanReviews(product.seller_id) : [];
+  const ratingStats = product.seller_id ? getArtisanRating(product.seller_id) : { averageRating: 5.0, totalReviews: 0, distribution: {} };
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopiedLink(true);
@@ -78,7 +88,7 @@ export default function ProductDetails() {
           <span className="text-earth-900 font-semibold truncate max-w-[200px]">{product.name}</span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {isOwner && (
             <Link
               to={`/edit-product/${product.id}`}
@@ -88,9 +98,14 @@ export default function ProductDetails() {
               Edit This Product
             </Link>
           )}
+
+          {/* Wishlist Button */}
+          <WishlistButton productId={product.id} iconSize="w-4 h-4" />
+
+          {/* Share Button */}
           <button
             onClick={handleCopyLink}
-            className="p-1.5 rounded-lg hover:bg-cream-200 text-earth-800"
+            className="p-2 rounded-full hover:bg-cream-200 text-earth-800 bg-white/80 border border-cream-200 transition-colors"
             title="Share this artwork"
           >
             <Share2 className="w-4 h-4" />
@@ -160,11 +175,32 @@ export default function ProductDetails() {
               {product.name}
             </h1>
 
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold font-serif text-terracotta-600">
-                ₹{Number(product.price).toLocaleString('en-IN')}
-              </span>
-              <span className="text-xs text-earth-800/60 font-medium">Fair Trade Artisan Price</span>
+            {/* Price and Artisan Rating Row */}
+            <div className="mt-3 flex items-baseline justify-between gap-2 border-b border-cream-200 pb-3">
+              <div>
+                <span className="text-3xl font-extrabold font-serif text-terracotta-600">
+                  ₹{Number(product.price).toLocaleString('en-IN')}
+                </span>
+                <span className="text-xs text-earth-800/60 font-medium block">Fair Trade Artisan Price</span>
+              </div>
+
+              {ratingStats.totalReviews > 0 ? (
+                <div className="text-right">
+                  <div className="flex items-center gap-1 text-amber-600 font-bold text-sm">
+                    <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                    <span>{ratingStats.averageRating}</span>
+                  </div>
+                  <span className="text-[11px] text-earth-800/60 font-medium">
+                    {ratingStats.totalReviews} verified reviews
+                  </span>
+                </div>
+              ) : (
+                <div className="text-right">
+                  <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    Certified Heritage Studio
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -189,6 +225,29 @@ export default function ProductDetails() {
             >
               Meet the Artisan
             </Link>
+          </div>
+
+          {/* CUSTOM ORDER COMMISSION CTA (FEATURE 1) */}
+          <div className="p-4 bg-linear-to-r from-terracotta-50 to-amber-50 rounded-2xl border border-terracotta-200/80 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-terracotta-600" />
+                <h4 className="font-display font-bold text-sm text-earth-900">
+                  Want Personalized Dimensions or Colors?
+                </h4>
+              </div>
+            </div>
+            <p className="text-xs text-earth-800/80 leading-relaxed">
+              Commission a customized version directly from {seller.name || 'the artisan'}. Specify custom dimensions, natural pigment colors, budget, and delivery date!
+            </p>
+            <button
+              type="button"
+              onClick={() => setCustomModalOpen(true)}
+              className="w-full py-2.5 px-4 rounded-xl bg-terracotta-500 hover:bg-terracotta-600 text-white font-semibold text-xs shadow-xs transition-all flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Request Customization / Bespoke Size</span>
+            </button>
           </div>
 
           {/* Description */}
@@ -228,6 +287,25 @@ export default function ProductDetails() {
       <div className="pt-6">
         <StorySection product={product} />
       </div>
+
+      {/* Verified Patron Reviews Section (Feature 3) */}
+      <div className="pt-6">
+        <ReviewsList
+          reviews={artisanReviews}
+          artisanName={seller.name || 'Master Artisan'}
+          averageRating={ratingStats.averageRating}
+          totalReviews={ratingStats.totalReviews}
+          distribution={ratingStats.distribution}
+        />
+      </div>
+
+      {/* Custom Order Request Modal */}
+      <CustomOrderModal
+        isOpen={customModalOpen}
+        onClose={() => setCustomModalOpen(false)}
+        artisan={seller}
+        product={product}
+      />
 
     </div>
   );

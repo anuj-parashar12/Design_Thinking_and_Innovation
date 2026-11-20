@@ -12,11 +12,15 @@ import {
   Menu, 
   X,
   Sparkles,
-  Database
+  Database,
+  Heart,
+  TrendingUp,
+  Package,
+  Layers
 } from 'lucide-react';
 
 export default function Navbar() {
-  const { user, logout, isDemoMode } = useAuth();
+  const { user, logout, isDemoMode, wishlistProductIds, orders } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,6 +35,9 @@ export default function Navbar() {
     if (path !== '/' && location.pathname.startsWith(path)) return true;
     return false;
   };
+
+  const wishlistCount = (wishlistProductIds || []).length;
+  const userOrdersCount = user ? (orders || []).filter(o => o.buyer_id === user.id || o.artisan_id === user.id).length : 0;
 
   return (
     <nav className="sticky top-0 z-50 bg-[#FAF4EB]/95 backdrop-blur-md border-b border-[#EAD7BF] shadow-xs">
@@ -66,10 +73,10 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1 lg:gap-2">
+          <div className="hidden lg:flex items-center gap-1">
             <Link
               to="/"
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors ${
                 isActive('/') && location.pathname === '/'
                   ? 'text-terracotta-600 bg-terracotta-50 font-semibold'
                   : 'text-earth-800 hover:text-terracotta-600 hover:bg-cream-100'
@@ -80,72 +87,123 @@ export default function Navbar() {
 
             <Link
               to="/explore"
-              className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-colors ${
+              className={`px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium flex items-center gap-1 transition-colors ${
                 isActive('/explore') || location.pathname.startsWith('/state')
                   ? 'text-terracotta-600 bg-terracotta-50 font-semibold'
                   : 'text-earth-800 hover:text-terracotta-600 hover:bg-cream-100'
               }`}
             >
               <Compass className="w-4 h-4 text-terracotta-500" />
-              Explore India
+              <span>Explore India</span>
             </Link>
 
             <Link
               to="/marketplace"
-              className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-colors ${
+              className={`px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium flex items-center gap-1 transition-colors ${
                 isActive('/marketplace')
                   ? 'text-terracotta-600 bg-terracotta-50 font-semibold'
                   : 'text-earth-800 hover:text-terracotta-600 hover:bg-cream-100'
               }`}
             >
               <ShoppingBag className="w-4 h-4 text-terracotta-500" />
-              Marketplace
+              <span>Marketplace</span>
             </Link>
 
             <Link
               to="/artisans"
-              className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-colors ${
+              className={`px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium flex items-center gap-1 transition-colors ${
                 isActive('/artisans')
                   ? 'text-terracotta-600 bg-terracotta-50 font-semibold'
                   : 'text-earth-800 hover:text-terracotta-600 hover:bg-cream-100'
               }`}
             >
               <Users className="w-4 h-4 text-terracotta-500" />
-              Artisans
+              <span>Artisans</span>
             </Link>
+
+            {/* <Link
+              to="/impact"
+              className={`px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium flex items-center gap-1 transition-colors ${
+                isActive('/impact')
+                  ? 'text-terracotta-600 bg-terracotta-50 font-semibold'
+                  : 'text-earth-800 hover:text-terracotta-600 hover:bg-cream-100'
+              }`}
+            >
+              <TrendingUp className="w-4 h-4 text-emerald-600" />
+              <span>Our Impact</span>
+            </Link> */}
 
             <Link
               to="/passport"
-              className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-colors ${
+              className={`px-2.5 py-2 rounded-lg text-xs xl:text-sm font-medium flex items-center gap-1 transition-colors ${
                 isActive('/passport')
                   ? 'text-terracotta-600 bg-terracotta-50 font-semibold'
                   : 'text-earth-800 hover:text-terracotta-600 hover:bg-cream-100'
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-500" />
-              Craft Passport
+              <span>Craft Passport</span>
             </Link>
           </div>
 
           {/* Desktop Right Actions */}
           <div className="hidden md:flex items-center gap-3">
+            
+            {/* Wishlist Heart Link */}
+            <Link
+              to="/collections"
+              className={`p-2 rounded-xl transition-all relative flex items-center justify-center ${
+                isActive('/collections') || isActive('/wishlist')
+                  ? 'text-red-600 bg-red-50'
+                  : 'text-earth-800 hover:text-red-500 hover:bg-cream-100'
+              }`}
+              title="Wishlist & Gift Collections"
+            >
+              <Heart className={`w-5 h-5 ${wishlistCount > 0 ? 'fill-red-500 text-red-500' : ''}`} />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+
             {user ? (
-              <div className="flex items-center gap-3">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-terracotta-500 hover:bg-terracotta-600 text-white font-medium text-sm shadow-sm transition-all"
-                >
-                  <PlusCircle className="w-4 h-4" />
-                  Seller Dashboard
-                </Link>
+              <div className="flex items-center gap-2">
+                {user.role === 'buyer' ? (
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to="/orders"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-cream-200 hover:bg-cream-300 text-earth-900 font-semibold text-xs transition-colors"
+                    >
+                      <Package className="w-4 h-4 text-terracotta-600" />
+                      <span>My Orders</span>
+                      {userOrdersCount > 0 && (
+                        <span className="w-4 h-4 rounded-full bg-terracotta-500 text-white text-[9px] flex items-center justify-center">
+                          {userOrdersCount}
+                        </span>
+                      )}
+                    </Link>
+                  </div>
+                ) : (
+                  <Link
+                    to="/dashboard"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-terracotta-500 hover:bg-terracotta-600 text-white font-medium text-xs shadow-sm transition-all"
+                  >
+                    <PlusCircle className="w-4 h-4" />
+                    <span>Seller Dashboard</span>
+                  </Link>
+                )}
+
                 <div className="flex items-center gap-2 pl-2 border-l border-cream-300">
                   <div className="text-right">
-                    <p className="text-xs font-semibold text-earth-900 leading-tight truncate max-w-[120px]">{user.name}</p>
-                    <p className="text-[10px] text-terracotta-600 font-medium capitalize">{user.role || 'Seller'}</p>
+                    <p className="text-xs font-semibold text-earth-900 leading-tight truncate max-w-[110px]">{user.name}</p>
+                    <p className="text-[10px] text-terracotta-600 font-medium capitalize">
+                      {user.role === 'buyer' ? 'Art Patron' : 'Master Artisan'}
+                    </p>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-2 text-earth-800 hover:text-red-600 hover:bg-cream-100 rounded-lg transition-colors"
+                    className="p-1.5 text-earth-800 hover:text-red-600 hover:bg-cream-100 rounded-lg transition-colors"
                     title="Logout"
                   >
                     <LogOut className="w-4 h-4" />
@@ -156,23 +214,36 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-earth-900 hover:text-terracotta-600 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-earth-900 hover:text-terracotta-600 rounded-lg transition-colors"
                 >
                   <LogIn className="w-4 h-4" />
                   Log In
                 </Link>
                 <Link
                   to="/register"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-terracotta-500 hover:bg-terracotta-600 rounded-lg shadow-sm transition-all"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-terracotta-500 hover:bg-terracotta-600 rounded-lg shadow-xs transition-all"
                 >
-                  Sell Your Craft
+                  Join KalaSetu
                 </Link>
               </div>
             )}
           </div>
 
           {/* Mobile hamburger */}
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-2">
+            <Link
+              to="/collections"
+              className="p-2 text-earth-800 hover:text-red-500 relative"
+              title="Wishlist"
+            >
+              <Heart className={`w-5 h-5 ${wishlistCount > 0 ? 'fill-red-500 text-red-500' : ''}`} />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-earth-900 hover:text-terracotta-600 hover:bg-cream-200 rounded-lg"
@@ -185,7 +256,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-cream-200 bg-[#FAF4EB] px-4 pt-3 pb-6 space-y-2">
+        <div className="lg:hidden border-t border-cream-200 bg-[#FAF4EB] px-4 pt-3 pb-6 space-y-2">
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -214,6 +285,20 @@ export default function Navbar() {
           >
             Artisans
           </Link>
+          {/* <Link
+            to="/impact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-base font-medium text-emerald-800 hover:bg-cream-200 font-semibold"
+          >
+            Our Impact
+          </Link> */}
+          <Link
+            to="/collections"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-base font-medium text-earth-900 hover:bg-cream-200"
+          >
+            Wishlist & Collections
+          </Link>
           <Link
             to="/passport"
             onClick={() => setMobileMenuOpen(false)}
@@ -225,13 +310,23 @@ export default function Navbar() {
           <div className="pt-4 border-t border-cream-200 space-y-2">
             {user ? (
               <>
-                <Link
-                  to="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center px-4 py-2.5 rounded-lg bg-terracotta-500 text-white font-medium shadow-sm"
-                >
-                  Seller Dashboard ({user.name})
-                </Link>
+                {user.role === 'buyer' ? (
+                  <Link
+                    to="/orders"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-center px-4 py-2.5 rounded-lg bg-cream-200 text-earth-900 font-semibold shadow-xs"
+                  >
+                    My Custom Orders ({userOrdersCount})
+                  </Link>
+                ) : (
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-center px-4 py-2.5 rounded-lg bg-terracotta-500 text-white font-medium shadow-sm"
+                  >
+                    Seller Dashboard ({user.name})
+                  </Link>
+                )}
                 <button
                   onClick={() => {
                     handleLogout();
@@ -256,7 +351,7 @@ export default function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="text-center px-4 py-2 rounded-lg bg-terracotta-500 text-white font-medium hover:bg-terracotta-600 shadow-sm"
                 >
-                  Sell Your Craft
+                  Join KalaSetu
                 </Link>
               </div>
             )}

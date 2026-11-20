@@ -13,7 +13,7 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/dashboard';
+  const from = location.state?.from?.pathname;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +21,9 @@ export default function Login() {
     setSubmitting(true);
 
     try {
-      await login(email, password);
-      navigate(from, { replace: true });
+      const loggedUser = await login(email, password);
+      const destination = from || (loggedUser.role === 'buyer' ? '/orders' : '/dashboard');
+      navigate(destination, { replace: true });
     } catch (err) {
       setError(err.message || 'Failed to log in. Please check your credentials.');
     } finally {
@@ -107,31 +108,39 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Demo Mode Quick Fill Buttons */}
-        <div className="pt-2 border-t border-cream-200 space-y-2">
-          <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-earth-800/60">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span>1-Click Demo Accounts (For Professor Review)</span>
+          {/* Demo Mode Quick Fill Buttons */}
+          <div className="pt-2 border-t border-cream-200 space-y-2">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-earth-800/60">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>1-Click Demo Accounts (For Professor Review)</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => handleQuickFill('sita.devi@kalasetu.demo', 'password123')}
+                className="p-2 rounded-lg bg-cream-100 hover:bg-cream-200 border border-cream-300 text-earth-900 font-medium text-left"
+              >
+                👩‍🎨 <strong>Sita Devi</strong>
+                <span className="block text-[10px] text-earth-800/60">Artisan (Madhubani)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickFill('artisan@kalasetu.demo', 'password123')}
+                className="p-2 rounded-lg bg-cream-100 hover:bg-cream-200 border border-cream-300 text-earth-900 font-medium text-left"
+              >
+                🏺 <strong>Arjun Das</strong>
+                <span className="block text-[10px] text-earth-800/60">Demo Potter</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickFill('priya.buyer@kalasetu.demo', 'password123')}
+                className="p-2 rounded-lg bg-terracotta-50 hover:bg-terracotta-100 border border-terracotta-300 text-terracotta-800 font-medium text-left"
+              >
+                🛍️ <strong>Priya Sharma</strong>
+                <span className="block text-[10px] text-terracotta-600 font-semibold">Demo Art Patron / Buyer</span>
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <button
-              type="button"
-              onClick={() => handleQuickFill('sita.devi@kalasetu.demo', 'password123')}
-              className="p-2 rounded-lg bg-cream-100 hover:bg-cream-200 border border-cream-300 text-earth-900 font-medium text-left"
-            >
-              👩‍🎨 <strong>Sita Devi</strong>
-              <span className="block text-[10px] text-earth-800/60">Madhubani Master</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleQuickFill('artisan@kalasetu.demo', 'password123')}
-              className="p-2 rounded-lg bg-cream-100 hover:bg-cream-200 border border-cream-300 text-earth-900 font-medium text-left"
-            >
-              🏺 <strong>Arjun Das</strong>
-              <span className="block text-[10px] text-earth-800/60">Demo Potter</span>
-            </button>
-          </div>
-        </div>
 
         {/* Footer Link */}
         <div className="text-center text-xs text-earth-800/70 pt-2">

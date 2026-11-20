@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { LocalDB } from '../lib/supabase';
 import ProductCard from '../components/ProductCard';
 import ContactSeller from '../components/ContactSeller';
+import CustomOrderModal from '../components/CustomOrderModal';
+import ReviewsList from '../components/ReviewsList';
 import { 
   MapPin, 
   Sparkles, 
@@ -12,12 +14,15 @@ import {
   Award, 
   UserCheck,
   Phone,
-  MessageCircle
+  MessageCircle,
+  Star
 } from 'lucide-react';
 
 export default function ArtisanProfile() {
   const { sellerId } = useParams();
-  const { products, user: loggedInUser } = useAuth();
+  const { products, user: loggedInUser, getArtisanReviews, getArtisanRating } = useAuth();
+
+  const [customModalOpen, setCustomModalOpen] = useState(false);
 
   // Find products belonging to this artisan
   const artisanProducts = products.filter((p) => p.seller_id === sellerId);
@@ -55,6 +60,9 @@ export default function ArtisanProfile() {
 
   const cleanPhone = (artisan.public_phone || '').replace(/[^0-9+]/g, '');
   const cleanWa = (artisan.whatsapp_number || '').replace(/[^0-9]/g, '');
+
+  const artisanReviews = getArtisanReviews(sellerId);
+  const ratingStats = getArtisanRating(sellerId);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
@@ -96,6 +104,12 @@ export default function ArtisanProfile() {
               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-terracotta-50 text-terracotta-700 border border-terracotta-200">
                 {artisan.craft_specialization || 'Traditional Arts & Crafts'}
               </span>
+              {ratingStats.totalReviews > 0 && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-300">
+                  <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                  <span>{ratingStats.averageRating} ({ratingStats.totalReviews} reviews)</span>
+                </span>
+              )}
             </div>
 
             <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-earth-900">
@@ -106,14 +120,23 @@ export default function ArtisanProfile() {
               {artisan.bio || 'Master craftsman preserving generations of Indian heritage arts.'}
             </p>
 
-            {/* Quick Contact Buttons */}
-            <div className="pt-2 flex flex-wrap gap-3">
+            {/* Quick Contact & Custom Order Buttons */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setCustomModalOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-terracotta-500 hover:bg-terracotta-600 text-white text-xs font-semibold shadow-sm transition-all"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Commission Bespoke Artwork</span>
+              </button>
+
               {artisan.show_whatsapp && cleanWa && (
                 <a
                   href={`https://wa.me/${cleanWa}?text=${encodeURIComponent(`Hello ${artisan.name}, I discovered your work on KalaSetu!`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>WhatsApp Artisan</span>
@@ -123,7 +146,7 @@ export default function ArtisanProfile() {
               {artisan.show_phone && cleanPhone && (
                 <a
                   href={`tel:${cleanPhone}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-terracotta-500 hover:bg-terracotta-600 text-white text-xs font-semibold shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-cream-300 hover:bg-cream-100 text-earth-800 text-xs font-semibold shadow-xs"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Call ({cleanPhone})</span>
@@ -163,6 +186,24 @@ export default function ArtisanProfile() {
           </div>
         )}
       </div>
+
+      {/* Verified Patron Reviews Section */}
+      <div className="pt-4">
+        <ReviewsList
+          reviews={artisanReviews}
+          artisanName={artisan.name}
+          averageRating={ratingStats.averageRating}
+          totalReviews={ratingStats.totalReviews}
+          distribution={ratingStats.distribution}
+        />
+      </div>
+
+      {/* Custom Commission Modal */}
+      <CustomOrderModal
+        isOpen={customModalOpen}
+        onClose={() => setCustomModalOpen(false)}
+        artisan={artisan}
+      />
 
     </div>
   );
