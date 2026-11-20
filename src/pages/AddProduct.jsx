@@ -386,7 +386,7 @@ export default function AddProduct() {
 
             {/* Preview Selected Images */}
             {imagePreviews.length > 0 && (
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 pt-im2">
                 {imagePreviews.map((prev, idx) => (
                   <div key={idx} className="w-24 h-24 rounded-xl overflow-hidden border border-cream-300 shadow-xs relative">
                     <img src={prev} alt="Preview" className="w-full h-full object-cover" />

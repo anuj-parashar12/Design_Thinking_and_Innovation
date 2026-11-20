@@ -29,7 +29,8 @@ export const STATES_DATA = {
     name: 'Odisha',
     capital: 'Bhubaneswar',
     primaryCraft: 'Pattachitra & Palm Leaf Engraving',
-    heroImage: 'https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=1200&auto=format&fit=crop&q=80',
+    heroImage: 'https://i0.wp.com/utkalikaodisha.com/wp-content/uploads/2022/10/Radha-krsihna-Dashavatara.jpg?fit=1200%2C1200&ssl=1',
+    // heroImage: 'https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=1200&auto=format&fit=crop&q=80',
     tagline: 'Cloth-based scroll paintings steeped in devotion to Lord Jagannath.',
     description: 'Pattachitra is a traditional cloth-based scroll painting renowned for its intricate details, mythological narratives, and traditional organic colours. The art form originated around Raghurajpur, a world-famous heritage crafts village near Puri.',
     history: 'Associated directly with the cult of Lord Jagannath dating over a thousand years. During the ritual bathing period (Anabasara), when the temple deities are sequestered, these sacred paintings were worshipped in their place.',
@@ -46,7 +47,8 @@ export const STATES_DATA = {
     name: 'Rajasthan',
     capital: 'Jaipur',
     primaryCraft: 'Jaipur Blue Pottery',
-    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=80',
+    heroImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlijgnYr07gBNYMcKzYsl9BXxOrfHiFpOJKUToxCuguUjjwTSQzDWAoog&s=10' ,
+    // heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=80',
     tagline: 'Distinctive turquoise glazed pottery made without clay using Egyptian paste.',
     description: 'Jaipur Blue Pottery is widely recognized by its vibrant cobalt blue and turquoise glazes painted on a dough prepared from quartz stone powder, powdered glass, Fuller’s earth (Multani Mitti), and natural gum.',
     history: 'Introduced to Jaipur by Maharaja Sawai Ram Singh II in the 19th century from Turko-Persian traditions. It became the signature craft of the royal Pink City.',
@@ -63,7 +65,8 @@ export const STATES_DATA = {
     name: 'Uttar Pradesh',
     capital: 'Lucknow',
     primaryCraft: 'Lucknowi Chikankari Embroidery',
-    heroImage: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1200&auto=format&fit=crop&q=80',
+    heroImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVvDtoSXafmk__sRfKcu0MIWiQ7M5fS6mMpJOvlAds87tPzklHmLSLqoMY&s=10',
+    // heroImage: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1200&auto=format&fit=crop&q=80',
     tagline: 'Delicate, ethereal shadow-work hand embroidery born in royal Awadhi courts.',
     description: 'Chikankari is the delicate and subtle art of hand embroidery on muslin, organza, and fine cotton fabrics. Associated with Lucknow’s aristocratic Nawabi elegance, it features over 32 diverse stitch styles.',
     history: 'Patronized by Empress Noor Jahan in the Mughal era and nurtured by the Nawabs of Awadh, Chikankari transformed ordinary white thread into royal couture.',
@@ -80,7 +83,8 @@ export const STATES_DATA = {
     name: 'Gujarat',
     capital: 'Gandhinagar',
     primaryCraft: 'Patan Patola (Double Ikat)',
-    heroImage: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=1200&auto=format&fit=crop&q=80',
+    heroImage: 'https://www.luxurionworld.com/cdn/shop/files/PS1P3CH423090505_Blue_Patan_Patola_Handloom_Double_Ikat_Saree_6.jpg?v=1694069953&width=3840',
+    // heroImage: 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=1200&auto=format&fit=crop&q=80',
     tagline: 'Legendary double ikat silk weaving where warp and weft are individually tie-dyed.',
     description: 'Patan Patola is one of the most complex handloom weaving techniques in the world. It requires both warp and weft threads to be precisely resist-dyed before weaving so that the patterns align flawlessly on both sides of the fabric.',
     history: 'In the 12th century, King Kumarapala brought 700 Patola weaver families from Maharashtra to Patan. Today, only a handful of families in the Salvi lineage continue this royal tradition.',
@@ -97,7 +101,7 @@ export const STATES_DATA = {
 export const INITIAL_DEMO_PRODUCTS = [
   {
     id: 'prod-101',
-    seller_id: 'artisan-sita-devi',
+    seller_id: 'artisan-sita-devi',    
     name: 'Tree of Life with Sun & Moon — Madhubani Canvas',
     price: 3450,
     state: 'Bihar',
@@ -137,8 +141,9 @@ export const INITIAL_DEMO_PRODUCTS = [
     materials: 'Specially treated treated cotton canvas, conch shell white, tamarind seed paste, herbal pigments',
     quantity: 2,
     image_urls: [
-      'https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&auto=format&fit=crop&q=80'
+      'https://cdn.shopify.com/s/files/1/0582/4007/3878/files/pattachitra-1.jpg?v=1635751688',
+      // 'https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=800&auto=format&fit=crop&q=80',
+      // 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&auto=format&fit=crop&q=80'
     ],
     description: 'Exquisite Pattachitra illustrating the ten divine incarnations of Vishnu surrounding the celestial Rasalila of Radha-Krishna. Finished with hand-ground stone pigments and natural lacquer glaze.',
     story_text: 'Our family has painted for Lord Jagannath’s temple for seven generations in Raghurajpur. Before touching brush to cloth, we perform a morning puja to invoke divine guidance. The conch-shell white takes three days of continuous mortar grinding. When someone hangs this Pattachitra, they carry the holy air of Puri into their home.',
@@ -156,6 +161,7 @@ export const INITIAL_DEMO_PRODUCTS = [
       whatsapp_number: '919811223344',
       show_phone: true,
       show_whatsapp: true,
+      // profile_image_url: 'https://cdn.shopify.com/s/files/1/0582/4007/3878/files/pattachitra-1.jpg?v=1635751688'
       profile_image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80'
     }
   },
@@ -169,6 +175,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     materials: 'Ground quartz powder, glass glaze, multani mitti, natural cobalt oxide',
     quantity: 5,
     image_urls: [
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlijgnYr07gBNYMcKzYsl9BXxOrfHiFpOJKUToxCuguUjjwTSQzDWAoog&s=10',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80'
     ],
     description: 'Handcrafted Jaipur Blue Pottery urn featuring hand-painted Persian Arabesque flourishes and blooming lotus motifs in signature cobalt and turquoise tones.',
@@ -200,7 +207,8 @@ export const INITIAL_DEMO_PRODUCTS = [
     materials: '100% fine cotton mulmul, silk thread, pure mother-of-pearl buttons',
     quantity: 4,
     image_urls: [
-      'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&auto=format&fit=crop&q=80'
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVvDtoSXafmk__sRfKcu0MIWiQ7M5fS6mMpJOvlAds87tPzklHmLSLqoMY&s=10'
+      // 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&auto=format&fit=crop&q=80'
     ],
     description: 'An ethereal pastel ivory Chikankari tunic featuring intricate Bakhiya (shadow work), Tepchi, and exquisite Jaali openwork hand-stitched by master craftswomen in Kakori.',
     story_text: 'Chikan embroidery is an exercise in patience and serenity. A single artisan works on this single piece over 28 afternoons under the winter sun. We sing Awadhi folk songs while working each knot. The shadow work on the reverse gives the subtle depth that machine embroidery can never recreate.',
@@ -231,6 +239,7 @@ export const INITIAL_DEMO_PRODUCTS = [
     materials: '100% Mulberry silk warp and weft, vegetable madder and turmeric dyes',
     quantity: 1,
     image_urls: [
+      'https://www.luxurionworld.com/cdn/shop/files/PS1P3CH423090505_Blue_Patan_Patola_Handloom_Double_Ikat_Saree_6.jpg?v=1694069953&width=3840',
       'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?w=800&auto=format&fit=crop&q=80'
     ],
     description: 'Authentic Patan Patola silk stole adorned with geometric elephant (Kunjar), parrot (Popat), and nine jewel floral baskets. Perfectly reversible with identical color brilliance on both sides.',

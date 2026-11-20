@@ -23,3 +23,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #C85A32;
 }
+
+/* Target only the images inside your product grid */
+.grid img {
+  width: 100%;
+  aspect-ratio: 4 / 3; /* or 1 / 1 if you prefer square */
+  object-fit: cover;
+  display: block;
+}
+
+/* Remove .group div:has(img) so text/body containers aren't clipped to a square */

@@ -175,7 +175,7 @@ export default function Home() {
 
       {/* 5. BEHIND THE ART SPOTLIGHT BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-linear-to-r from-earth-900 via-earth-950 to-terracotta-900 text-white rounded-3xl p-8 md:p-14 relative overflow-hidden shadow-xl">
+        <div className="bg-gradient-to-r from-earth-900 via-earth-950 to-earth-900 text-white rounded-3xl p-8 md:p-14 relative overflow-hidden shadow-xl">
           <div className="max-w-2xl relative z-10 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta-500/30 text-amber-300 text-xs font-semibold border border-terracotta-400/40">
               <Sparkles className="w-3.5 h-3.5" />
