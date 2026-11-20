@@ -54,7 +54,17 @@ KalaSetu is a functional, responsive web application connecting patrons directly
 - Automatically stamps visited state heritage pages in browser storage (`localStorage`).
 - Visual stamp collection with cultural emblems and progress tracking.
 
-### 9. Dual-Engine Architecture (Zero-Setup Demo Mode + Supabase)
+### 9. Full Seller Dashboard & Product Management
+ - Seller registration and authentication.
+ - Add new handmade creations with genuine media storage.
+ - Edit product titles, prices, descriptions, images, and availability.
+ - Delete products with immediate removal from public marketplace.
+
+### 10. State-Wise Craft Pages & Product Filtering**:
+ - When a seller tags their creation with a state, it automatically appears under that state's heritage page.
+ - Full marketplace with keyword search, state filter, craft category filter, and price range filter.
+
+### 11. Dual-Engine Architecture (Zero-Setup Demo Mode + Supabase)
 - **Local Demo Mode**: Works right out of the box without requiring external credentials or internet accounts! Uses `localStorage` for session/product/order/review metadata and `IndexedDB` for high-resolution images, progress photos, videos, and documents.
 - **Supabase Cloud Mode**: Seamlessly switches to PostgreSQL and Supabase Storage when credentials are added to `.env`.
 
